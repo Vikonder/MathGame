@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משימה: תכנון מגלשת החלומות</title>
     <style>
-        /* ... (שאר סגנונות ה-CSS נשארים זהים, פרט להסרת סגנונות QR) ... */
-         body {
+        body {
             direction: rtl;
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
@@ -123,7 +122,7 @@
         }
         #feedback.correct {
             color: #28a745;
-            padding: 10px; /* עיצוב להודעת ההמתנה */
+            padding: 10px;
             border: 1px solid #a3d3ab;
             background-color: #e2f0e4;
             border-radius: 5px;
@@ -133,7 +132,7 @@
         #feedback.incorrect {
             color: #d9534f;
         }
-        #finalCodeContainer { /* ישמש להודעת הצלחה והקוד, אם נרצה להחזיר את הקוד */
+        #finalCodeContainer {
             margin-top: 25px;
             display: none;
             padding: 25px;
@@ -162,7 +161,7 @@
             height: 100%;
             z-index: -1;
             display: none;
-            background-color: rgba(0, 0, 0, 0.1);
+            /* background-color: rgba(0, 0, 0, 0.1); -- לא נחוץ אם מנקים את הקנבס */
         }
         .math-inline {
             font-family: 'Times New Roman', Times, serif;
@@ -222,65 +221,26 @@
     </div>
 
     <div class="diagram-container">
-      <!-- SVG מתוקן עם קואורדינטות קרטזיות רגילות -->
-      <svg class="graph-svg" viewBox="-1 -1 20 13" xmlns="http://www.w3.org/2000/svg"> <!-- viewBox עודכן מעט -->
-        <!-- רקע ים ושמיים -->
-        <rect x="-1" y="-1" width="21" height="10" fill="#87CEEB"/> <!-- שמיים -->
-        <rect x="-1" y="9" width="21" height="4" fill="#5dade2"/>  <!-- ים -->
-
-        <!-- בניין -->
-        <rect x="-0.5" y="-0.5" width="1.5" height="10.5" fill="#d2b48c"/> <!-- גוף הבניין, y=0 עד y=10 -->
-        <rect x="-0.2" y="0" width="0.9" height="2" fill="#add8e6"/> <!-- חלון ב-y=8 עד y=10 -->
-        
-        <!-- צירים מתמטיים (0,0) בפינה השמאלית התחתונה של אזור ההתייחסות -->
-        <!-- ציר X (פני הים) -->
+      <svg class="graph-svg" viewBox="-1 -1 20 13" xmlns="http://www.w3.org/2000/svg">
+        <rect x="-1" y="-1" width="21" height="10" fill="#87CEEB"/>
+        <rect x="-1" y="9" width="21" height="4" fill="#5dade2"/>
+        <rect x="-0.5" y="-0.5" width="1.5" height="10.5" fill="#d2b48c"/>
+        <rect x="-0.2" y="0" width="0.9" height="2" fill="#add8e6"/>
         <line x1="-1" y1="10" x2="20" y2="10" stroke="#696969" stroke-width="0.05"/>
         <text x="0" y="10.8" font-size="0.5" fill="#333" text-anchor="middle">x=0 (בסיס הבניין)</text>
         <text x="10" y="10.8" font-size="0.5" fill="#333" text-anchor="middle">x=10 (קו המים)</text>
-
-        <!-- ציר Y (קיר הבניין) -->
         <line x1="0" y1="10" x2="0" y2="-1" stroke="#696969" stroke-width="0.05"/>
         <text x="-0.5" y="10" font-size="0.5" fill="#333" text-anchor="end">y=0 (פני הים)</text>
         <text x="-0.5" y="0" font-size="0.5" fill="#333" text-anchor="end">y=10 (חלון)</text>
-
-        <!-- קבוצת g עם טרנספורמציה להיפוך ציר Y והזזה -->
         <g transform="translate(0, 10) scale(1, -1)">
-            <!-- הנקודות בקואורדינטות מתמטיות רגילות -->
             <circle cx="0" cy="10" r="0.2" fill="red"/>
-            <text x="0" y="9.2" font-size="0.5" fill="red" text-anchor="middle" transform="scale(1,-1) translate(0, -18.4)">A (0,10)</text> <!-- היפוך טקסט חזרה -->
-
+            <text x="0" y="9.2" font-size="0.5" fill="red" text-anchor="middle" transform="scale(1,-1) translate(0, -18.4)">A (0,10)</text>
             <circle cx="5" cy="4" r="0.2" fill="green"/>
             <text x="5" y="4.8" font-size="0.5" fill="green" text-anchor="middle" transform="scale(1,-1) translate(0, -9.6)">B (5,4)</text>
-
             <circle cx="10" cy="0" r="0.2" fill="red"/>
             <text x="10" y="0.8" font-size="0.5" fill="red" text-anchor="middle" transform="scale(1,-1) translate(0, -1.6)">C (10,0)</text>
-
-            <!-- פרבולה (נתיב עקום Bezier - אולי נצטרך להתאים את נקודות הבקרה) -->
-            <!-- הנתיב המקורי: d="M 0 10 C 2.5 8, 7.5 -1, 10 0"  -->
-            <!-- הערכים בקואורדינטות מתמטיות: -->
-            <!-- M (0,10) - התחלה -->
-            <!-- C (נקודת בקרה 1) (נקודת בקרה 2) (סיום) -->
-            <!-- ננסה נקודות בקרה שיתאימו יותר לקשת פרבולית שעוברת דרך (5,4) -->
-            <!-- לדוגמה: נניח קודקוד סביב x=2.5, y=1.2 (עבור a=0.04, b=-1.4, c=10, הקודקוד הוא בערך x=17.5, y=-4.25, אז עקומת הבזייה לא תתאים) -->
-            <!-- נצטרך להשתמש בפתרון הפרבולה שמצאנו: y = 0.04x² - 1.4x + 10 -->
-            <!-- ניצור נתיב מנקודות: -->
-            <polyline points="
-                0,10
-                1,8.64
-                2,7.36
-                3,6.16
-                4,5.04
-                5,4.0
-                6,3.04
-                7,2.16
-                8,1.36
-                9,0.64
-                10,0
-            " fill="none" stroke="#f39c12" stroke-width="0.2" />
-
-            <!-- קודקוד (הוסר כי הוא לא רלוונטי למשימה הנוכחית) -->
-            <!-- <circle cx="17.5" cy="-2.25" r="0.2" fill="purple" opacity="0.5"/>
-            <text x="17.5" y="-1.5" font-size="0.5" fill="purple" text-anchor="middle" opacity="0.7">(קודקוד x=17.5)</text> -->
+            <polyline points="0,10 1,8.64 2,7.36 3,6.16 4,5.04 5,4.0 6,3.04 7,2.16 8,1.36 9,0.64 10,0"
+                       fill="none" stroke="#f39c12" stroke-width="0.2" />
         </g>
       </svg>
     </div>
@@ -291,14 +251,12 @@
         <li>
             <div class="code-rule">
             <strong>הקוד הסודי</strong> לפתיחת השלב הבא מורכב מ-<strong>5 ספרות</strong>. כדי ליצור אותו:
-            
             <p><strong>סיכום הכלל לדוגמה עם a=0.05, b=-0.4, c=22:</strong>
                 <br>1. `round(|0.05|*100) = 5`. הספרה הראשונה: **5**.
                 <br>2. `round(|-2.7|*10) = 27`. שתי הספרות: **27**.
                 <br>3. `round(|22) = 22`. שתי הספרות: **22**.
                 <br>הקוד המורכב: <span class="code-example">52722</span>.
 				<br> ----- הזן את הערך שהתקבל a b c לחץ על כפתור "בנה....." והקוד ייווצר אוטומטית  -----
-				
             </p>
             </div>
         </li>
@@ -338,17 +296,29 @@
   </div>
 
   <script>
-    // --- קוד הזיקוקים נשאר כפי שהוא ---
+    // --- קוד הזיקוקים ---
     const canvas = document.getElementById('fireworksCanvas');
     const ctx = canvas.getContext('2d');
     let fireworks = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.size = Math.random() * 2 + 1; this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5; this.alpha = 1; this.decay = Math.random() * 0.02 + 0.01;} update() { this.x += this.speedX; this.y += this.speedY; this.alpha -= this.decay;} draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();}}
     class Firework { constructor(x, y) { this.x = x; this.y = y; this.particles = []; const hue = Math.random() * 360; const color = `hsl(${hue}, 100%, 70%)`; const particleCount = 50 + Math.random() * 50; for (let i = 0; i < particleCount; i++) {this.particles.push(new Particle(this.x, this.y, color));}} update() { this.particles.forEach((p, index) => { p.update(); if (p.alpha <= 0) this.particles.splice(index, 1); });} draw() { this.particles.forEach(p => p.draw()); }}
-    let animationFrameId_fireworks; function animateFireworks() { ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.globalAlpha = 1; fireworks.forEach((fw, index) => { fw.update(); fw.draw(); if (fw.particles.length === 0) fireworks.splice(index, 1); }); if (fireworks.length > 0) animationFrameId_fireworks = requestAnimationFrame(animateFireworks); else canvas.style.display = 'none';}
-    function launchFireworks() { resizeCanvas(); canvas.style.display = 'block'; if(animationFrameId_fireworks) cancelAnimationFrame(animationFrameId_fireworks); for(let i=0; i< 5; i++) {fireworks.push(new Firework(canvas.width * (0.2 + Math.random() * 0.6), canvas.height * (0.3 + Math.random() * 0.4)));} fireworks.push(new Firework(canvas.width / 2, canvas.height / 2)); animateFireworks();}
+    let animationFrameId_fireworks; function animateFireworks() { ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.globalAlpha = 1; fireworks.forEach((fw, index) => { fw.update(); fw.draw(); if (fw.particles.length === 0) fireworks.splice(index, 1); }); if (fireworks.length > 0) animationFrameId_fireworks = requestAnimationFrame(animateFireworks); else { canvas.style.display = 'none'; /* הסתר את הקנבס כשהזיקוקים מסתיימים אם לא הופסקו ידנית */}}
+    function launchFireworks() { resizeCanvas(); canvas.style.display = 'block'; if(animationFrameId_fireworks) cancelAnimationFrame(animationFrameId_fireworks); fireworks = []; /* איפוס מערך הזיקוקים */ for(let i=0; i< 5; i++) {fireworks.push(new Firework(canvas.width * (0.2 + Math.random() * 0.6), canvas.height * (0.3 + Math.random() * 0.4)));} fireworks.push(new Firework(canvas.width / 2, canvas.height / 2)); animateFireworks();}
     window.addEventListener('resize', resizeCanvas);
     // --- סוף קוד הזיקוקים ---
+
+    // פונקציה חדשה להפסקת הזיקוקים
+    function stopFireworks() {
+        if (animationFrameId_fireworks) {
+            cancelAnimationFrame(animationFrameId_fireworks);
+            animationFrameId_fireworks = null;
+        }
+        fireworks = [];
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        canvas.style.display = 'none';
+        console.log("Fireworks stopped.");
+    }
 
     // לוגיקה עיקרית
     function checkCoefficients() {
@@ -358,7 +328,7 @@
 
         feedbackElement.textContent = '';
         feedbackElement.className = '';
-        codeContainer.style.display = 'none'; // הסתרת הקוד בהתחלה
+        codeContainer.style.display = 'none';
 
         const a_user_str = document.getElementById('coeff_a').value;
         const b_user_str = document.getElementById('coeff_b').value;
@@ -384,9 +354,9 @@
         let c_correct = Math.abs(c_user - correct_c) < tolerance;
 
         if (a_correct && b_correct && c_correct) {
-            let a_val_calc = Math.round(Math.abs(correct_a) * 100); 
-            let b_val_calc = Math.round(Math.abs(correct_b) * 10);  
-            let c_val_calc = Math.round(Math.abs(correct_c));       
+            let a_val_calc = Math.round(Math.abs(correct_a) * 100);
+            let b_val_calc = Math.round(Math.abs(correct_b) * 10);
+            let c_val_calc = Math.round(Math.abs(correct_c));
 
             let firstDigitFromA = a_val_calc.toString();
             if (firstDigitFromA.length > 1) {
@@ -397,14 +367,14 @@
             let c_code_str = c_val_calc.toString().padStart(2, '0');
             const secretCode = firstDigitFromA + b_code_str + c_code_str;
 
-            // === שינוי הודעה והפנייה ===
-            feedbackElement.innerHTML = 'כל הכבוד! החישובים למגלשה נכונים!<br>Wait for the next question...';
-            feedbackElement.className = 'correct'; // מחליף את correct-feedback
-            finalCodeDisplay.textContent = secretCode; // עדיין מציג את הקוד הסודי
-            codeContainer.style.display = 'block';    // עדיין מציג את קונטיינר הקוד
+            feedbackElement.innerHTML = 'כל הכבוד! החישובים למגלשה נכונים!<br>הארכיונאי גאה בך!';
+            feedbackElement.className = 'correct';
+            finalCodeDisplay.textContent = secretCode;
+            codeContainer.style.display = 'block';
 
-            launchFireworks(); // הפעלת הזיקוקים
+            launchFireworks();
 
+            setTimeout(stopFireworks, 60000); // הפסק זיקוקים אחרי דקה
 
         } else {
             let errorMessage = 'המקדמים שהזנת אינם נכונים. ';
