@@ -76,17 +76,17 @@
         #feedback {
             margin-top: 15px;
             font-weight: bold;
-            min-height: 20px; /* שומר על גובה גם כשאין טקסט */
+            min-height: 20px;
             font-size: 1.1em;
             text-align: center;
         }
-        .correct {
+        .correct { /* סגנון להודעת "נכון" והמתנה */
             color: #27ae60;
             padding: 10px;
             border: 1px solid #a3d3ab;
             background-color: #e8f8f5;
             border-radius: 5px;
-            display: inline-block; /* להתאים את הרקע לטקסט */
+            display: inline-block;
             font-size: 1.2em;
         }
         .incorrect {
@@ -163,11 +163,11 @@
         function checkAnswer() {
             const userAnswerInput = document.getElementById('userAnswer');
             const feedbackElement = document.getElementById('feedback');
-            // const qrContainer = document.getElementById('qrCodeContainer'); // כבר לא בשימוש
+            // const qrContainer הוסר מכאן
 
             feedbackElement.textContent = '';
             feedbackElement.className = '';
-            // qrContainer.style.display = 'none'; // כבר לא בשימוש
+            // השורה qrContainer.style.display = 'none'; הוסרה
 
             const userAnswer = parseFloat(userAnswerInput.value);
 
@@ -184,10 +184,12 @@
                 // === שינוי ההודעה במקרה של תשובה נכונה ===
                 feedbackElement.innerHTML = 'נכון מאוד! חשיבה אנליטית ודיוק הן נקודות החוזק שלך.<br>Wait for the next question...';
                 feedbackElement.className = 'correct';
+                // אין צורך להציג QR
 
                 setTimeout(function() {
-                    window.location.href = 'https://vikonder.github.io/MathGame/index3.html'; // שינוי ל- index3.html
-                }, 2500); // הגדלתי מעט את ההמתנה
+                    // ודא שהקישור כאן הוא ל-index4.html, כפי שהכוונה
+                    window.location.href = 'https://vikonder.github.io/MathGame/index3.html';
+                }, 2500);
 
             } else {
                 feedbackElement.textContent = 'לא נכון. בדוק מחדש את משוואת הפרבולה או את חישוב האינטגרל. היעזר ברמז.';
