@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"> <!-- שפה עברית, כיוון מימין לשמאל -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משימה: שטח מתחת לחבל</title> <!-- כותרת בעברית -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif; /* גופן תומך עברית */
+            line-height: 1.6;
+            padding: 20px;
+            background-color: #f0f8ff;
+            color: #333;
+            direction: rtl; /* כיוון הדף */
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 30px auto;
+            text-align: right; /* יישור טקסט כללי לימין */
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center; /* כותרת ממורכזת */
+            margin-bottom: 20px;
+        }
+        p {
+            color: #34495e;
+            margin-bottom: 15px;
+        }
+        .diagram-container {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            text-align: center; /* מרכוז הדיאגרמה והטקסט מתחתיה */
+        }
+        .diagram-svg {
+            max-width: 400px;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input[type="number"] {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            width: 150px;
+            font-size: 1em;
+            text-align: right; /* קלט מספרי מימין לשמאל */
+        }
+        button {
+            padding: 12px 25px;
+            margin-top: 20px;
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #3498db;
+        }
+        #feedback {
+            margin-top: 15px;
+            font-weight: bold;
+            min-height: 20px;
+            font-size: 1.1em;
+            text-align: center; /* מרכוז הודעת המשוב */
+        }
+        .correct {
+            color: #27ae60;
+        }
+        .incorrect {
+            color: #c0392b;
+        }
+        #qrCodeContainer {
+            margin-top: 20px;
+            display: none;
+            padding: 15px;
+            border: 1px dashed #27ae60;
+            background-color: #e8f8f5;
+            border-radius: 5px;
+            text-align: center; /* מרכוז תוכן ה-QR */
+        }
+         #qrCodeContainer img {
+            display: block;
+            margin: 10px auto;
+            max-width: 200px;
+            height: auto;
+            border: 1px solid #eee;
+        }
+         #hint {
+            margin-top: 25px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: right; /* יישור הרמז לימין */
+            border-top: 1px solid #ecf0f1;
+            padding-top: 15px;
+         }
+         #hint strong {
+             color: #2c3e50;
+         }
+         /* שינוי סגנון ה-SVG */
+         .diagram-svg text { /* ברירת מחדל ליישור טקסט ב-SVG */
+            text-anchor: end; /* מיישר לימין (ב-SVG) */
+         }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>משימה: שטח מתחת לחבל שמוט</h1>
+
+        <p>בין שני עמודים, שגובה כל אחד מהם <strong>5 מטרים</strong> והמרחק ביניהם <strong>8 מטרים</strong>, מתוח חבל. עקב השמיטה, הנקודה הנמוכה ביותר של החבל נמצאת בגובה <strong>3 מטרים</strong> מהקרקע, בדיוק באמצע הדרך בין העמודים.</p>
+        <p>נניח שהחבל שמוט בצורת פרבולה.</p>
+
+        <div class="diagram-container">
+            <svg class="diagram-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+                <!-- קרקע -->
+                <line x1="0" y1="110" x2="200" y2="110" stroke="#8c6d62" stroke-width="3" />
+                 <!-- עמודים -->
+                <line x1="30" y1="110" x2="30" y2="60" stroke="brown" stroke-width="3" />
+                <line x1="170" y1="110" x2="170" y2="60" stroke="brown" stroke-width="3" />
+                <!-- חבל (פרבולה) -->
+                <path d="M 30 60 Q 100 80 170 60" fill="none" stroke="#f39c12" stroke-width="2.5" />
+
+                <!-- מידות -->
+                <!-- גובה עמוד -->
+                <line x1="25" y1="60" x2="25" y2="110" stroke="black" stroke-width="0.5" stroke-dasharray="2,2" />
+                <text x="20" y="90" font-size="8" fill="black">5 מ'</text>
+                 <!-- גובה שמיטה -->
+                 <line x1="100" y1="80" x2="100" y2="110" stroke="black" stroke-width="0.5" stroke-dasharray="2,2" />
+                 <text x="95" y="100" font-size="8" fill="black">3 מ'</text>
+                 <!-- מרחק בין עמודים -->
+                 <line x1="30" y1="115" x2="170" y2="115" stroke="black" stroke-width="0.5" />
+                 <line x1="30" y1="112" x2="30" y2="118" stroke="black" stroke-width="0.5" />
+                 <line x1="170" y1="112" x2="170" y2="118" stroke="black" stroke-width="0.5" />
+                 <text x="108" y="125" font-size="8" fill="black">8 מ'</text>
+                 <!-- תווית שטח S -->
+                 <text x="105" y="90" font-size="10" fill="blue" font-style="italic">S = ?</text>
+
+            </svg>
+        </div>
+
+        <p><strong>משימה:</strong> מצאו את שטח הצורה (במטרים רבועים) הכלואה בין החבל (הפרבולה), שני העמודים והקרקע. הזינו את התשובה בדיוק של ספרה אחת אחרי הנקודה העשרונית.</p>
+
+        <label for="userAnswer">התשובה שלך (שטח S במ"ר):</label>
+        <input type="number" id="userAnswer" step="0.1" placeholder="לדוגמה: 25.5">
+
+        <button onclick="checkAnswer()">בדיקת תשובה</button>
+
+        <p id="feedback"></p>
+
+        <div id="qrCodeContainer">
+            <p class="correct">נכון מאוד! חשיבה אנליטית ודיוק הן נקודות החוזק שלך. הארכיונאי מרוצה. התעלומה הבאה מחכה!</p>
+            <img id="qrImage" src="qr_code_final.png" alt="קוד QR לדף הסיום">
+            <p><small>(סרוק את קוד ה-QR כדי לקבל את הסמל הסופי)</small></p>
+        </div>
+
+        <div id="hint">
+            <strong>רמז:</strong>
+            <ol>
+                <li>דמיין מערכת צירים שראשיתה (0,0) על הקרקע, בדיוק באמצע הדרך בין העמודים.</li>
+                <li>העמודים יהיו ב- x = -4 וב- x = 4. קצותיהם העליונים יהיו ב- (-4, 5) ו- (4, 5).</li>
+                <li>הנקודה הנמוכה ביותר של החבל תהיה ב- (0, 3).</li>
+                <li>מצא את משוואת הפרבולה `y = ax² + c` העוברת דרך שלוש הנקודות הללו.</li>
+                <li>השטח מתחת לעקומה `y = f(x)` בין `a` ל- `b` מחושב באמצעות אינטגרל מסוים: `S = ∫[a, b] f(x) dx`.</li>
+                <li>היזכר בנוסחת ניוטון-לייבניץ: `∫[a, b] f(x) dx = F(b) - F(a)`, כאשר F(x) היא הפונקציה הקדומה של f(x).</li>
+                <li>הפונקציה הקדומה של `kxⁿ` היא `k * x^(n+1) / (n+1)`.</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer() {
+            const userAnswerInput = document.getElementById('userAnswer');
+            const feedbackElement = document.getElementById('feedback');
+            const qrContainer = document.getElementById('qrCodeContainer');
+
+            feedbackElement.textContent = '';
+            feedbackElement.className = '';
+            qrContainer.style.display = 'none';
+
+            const userAnswer = parseFloat(userAnswerInput.value);
+
+            if (isNaN(userAnswer)) {
+                feedbackElement.textContent = 'אנא הזן תשובה מספרית.'; // Please enter a numeric answer.
+                feedbackElement.className = 'incorrect';
+                return;
+            }
+
+            // התשובה הנכונה: S = ∫[-4, 4] (0.125x² + 3) dx = 88/3 ≈ 29.333...
+            const correctAnswer = 29.3; // עיגול לספרה אחת אחרי הנקודה
+            const tolerance = 0.05; // טווח שגיאה קטן לעיגול
+
+            if (Math.abs(userAnswer - correctAnswer) < tolerance) {
+                feedbackElement.textContent = ''; // ההודעה החיובית נמצאת בתוך ה-QR קונטיינר
+                feedbackElement.className = 'correct'; // אפשר להסיר אם לא צריך
+                qrContainer.style.display = 'block'; // הצגת QR והודעה
+            } else {
+                feedbackElement.textContent = 'לא נכון. בדוק מחדש את משוואת הפרבולה או את חישוב האינטגרל. היעזר ברמז.'; // Incorrect. Recheck parabola equation or integral calculation. Use the hint.
+                feedbackElement.className = 'incorrect';
+            }
+        }
+    </script>
+
+</body>
+</html>
