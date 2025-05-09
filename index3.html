@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משימה: מנעול הקוד של הארכיונאי</title>
     <style>
-        /* ... (כל סגנונות ה-CSS הקודמים נשארים זהים) ... */
          body {
             font-family: 'Arial', sans-serif;
             line-height: 1.7;
@@ -48,7 +47,6 @@
         .task-description li {
              margin-bottom: 8px;
         }
-        /* הוספת סגנון להסבר */
         .explanation {
             font-size: 0.9em;
             color: #6c757d;
@@ -132,27 +130,17 @@
         }
         .correct {
             color: #28a745;
+            padding: 10px; /* עיצוב להודעת ההמתנה */
+            border: 1px solid #a3d3ab;
+            background-color: #e2f0e4;
+            border-radius: 5px;
+            display: inline-block;
+            font-size: 1.2em;
         }
         .incorrect {
             color: #dc3545;
         }
-        #qrCodeContainer {
-            margin-top: 25px;
-            display: none;
-            padding: 20px;
-            border: 2px solid #28a745;
-            background-color: #f0fff4;
-            border-radius: 8px;
-            text-align: center;
-        }
-         #qrCodeContainer img {
-            display: block;
-            margin: 15px auto 10px auto;
-            max-width: 220px;
-            height: auto;
-            border: 1px solid #ccc;
-         }
-         .lock-image-container img {
+        .lock-image-container img {
             max-width: 150px;
             height: auto;
             margin-bottom: 20px;
@@ -217,11 +205,7 @@
 
         <p id="feedback"></p>
 
-        <div id="qrCodeContainer">
-            <p class="correct">המנעול נפתח! התושייה והידע המתמטי שלכם מרשימים.</p>
-            <img id="qrImage" src="qr_code_next_level.png" alt="קוד QR לשלב הבא">
-            <p><small>(סרוק את קוד ה-QR כדי לגשת לסוד הבא של הארכיונאי)</small></p>
-        </div>
+        <!-- div של קוד ה-QR הוסר -->
     </div>
 
     <script>
@@ -229,11 +213,11 @@
             const digit1Input = document.getElementById('digit1');
             const digit2Input = document.getElementById('digit2');
             const feedbackElement = document.getElementById('feedback');
-            const qrContainer = document.getElementById('qrCodeContainer');
+            // const qrContainer = document.getElementById('qrCodeContainer'); // כבר לא בשימוש
 
             feedbackElement.textContent = '';
             feedbackElement.className = '';
-            qrContainer.style.display = 'none';
+            // qrContainer.style.display = 'none'; // כבר לא בשימוש
 
             const correctDigit1 = 3;
             const correctDigit2 = 5;
@@ -251,15 +235,13 @@
             const userDigit2 = parseInt(userDigit2Str);
 
             if (userDigit1 === correctDigit1 && userDigit2 === correctDigit2) {
-                feedbackElement.textContent = '';
+                // === שינוי ההודעה במקרה של תשובה נכונה ===
+                feedbackElement.innerHTML = 'המנעול נפתח! התושייה והידע המתמטי שלכם מרשימים.<br>Wait for the next question...';
                 feedbackElement.className = 'correct';
-                qrContainer.style.display = 'block';
 
-                // === הפנייה ל-index4.html לאחר הצלחה ===
                 setTimeout(function() {
-                    window.location.href = 'https://vikonder.github.io/MathGame/index4.html';
-                }, 2000); // 2000 מילישניות = 2 שניות
-                // ========================================
+                    window.location.href = 'https://vikonder.github.io/MathGame/index4.html'; // הפנייה לדף הבא
+                }, 2500); // הגדלתי מעט את ההמתנה
 
             } else {
                 feedbackElement.textContent = 'קוד שגוי. פתור מחדש את המשוואות ובדוק אילו שורשים בחרת.';

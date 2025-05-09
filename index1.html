@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>משימה: זווית נטיית החבל</title>
     <style>
-        /* העתק לכאן את כל סגנונות ה-CSS מהקוד הקודם שלך */
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
@@ -74,28 +73,21 @@
             margin-top: 15px;
             font-weight: bold;
             min-height: 20px;
+            font-size: 1.2em; /* הגדלתי מעט את הפונט של המשוב */
         }
         .correct {
             color: green;
+            /* סגנון להודעת ההמתנה */
+            padding: 10px;
+            border: 1px solid #d4edda;
+            background-color: #e2f0e4;
+            border-radius: 5px;
+            display: inline-block; /* כדי שהרקע והגבול יתאימו לטקסט */
         }
         .incorrect {
             color: red;
         }
-        #qrCodeContainer {
-            margin-top: 20px;
-            display: none;
-        }
-         #qrCodeContainer img {
-            display: block;
-            margin: 0 auto;
-            max-width: 200px;
-            height: auto;
-            border: 1px solid #eee;
-        }
-         #qrCodeContainer p {
-             text-align: center;
-         }
-         .diagram-container p {
+        .diagram-container p {
              text-align: center;
          }
     </style>
@@ -125,28 +117,24 @@
         <p><strong>משימה:</strong> חשבו את אורך החבל המשתלשל (היתר, L). הזינו את התשובה בדיוק של ספרה אחת אחרי הנקודה העשרונית (לדוגמה, 12.3).</p>
 
         <label for="userAnswer">התשובה שלך (L במטרים):</label>
-        <input type="number" id="userAnswer" step="0.1" placeholder="לדוגמה: 12.3">
+        <input type="number" id="userAnswer" step="0.1" placeholder="לדוגמה: 11.5">
 
         <button onclick="checkAnswer()">בדיקת תשובה</button>
 
         <p id="feedback"></p>
 
-        <div id="qrCodeContainer">
-            <p style="color:green; font-weight:bold;">מצוין! הנה המפתח למשימה הבאה:</p>
-            <img id="qrImage" src="qr_code_next.png" alt="קוד QR למשימה הבאה">
-            <p><small>(סרוק את קוד ה-QR באמצעות מצלמת הטלפון)</small></p>
-        </div>
+        <!-- div של ה-QR הוסר לחלוטין -->
     </div>
 
     <script>
         function checkAnswer() {
             const userAnswerInput = document.getElementById('userAnswer');
             const feedbackElement = document.getElementById('feedback');
-            const qrContainer = document.getElementById('qrCodeContainer');
+            // const qrContainer = document.getElementById('qrCodeContainer'); // כבר לא רלוונטי
 
             feedbackElement.textContent = '';
             feedbackElement.className = '';
-            qrContainer.style.display = 'none';
+            // qrContainer.style.display = 'none'; // כבר לא רלוונטי
 
             if (userAnswerInput.value.trim() === '') {
                  feedbackElement.textContent = 'אנא הזן תשובה.';
@@ -163,16 +151,17 @@
             }
 
             const correctAnswer = 11.5;
-            const tolerance = 0.05; 
+            const tolerance = 0.05;
 
             if (Math.abs(userAnswer - correctAnswer) < tolerance) {
-                feedbackElement.textContent = 'נכון! מעולה! מיד תועבר למשימה הבאה...';
+                // === שינוי הודעה במקרה של תשובה נכונה ===
+                feedbackElement.innerHTML = 'נכון! מעולה!<br>Wait for the next question...';
                 feedbackElement.className = 'correct';
-                
+                // אין צורך להציג QR
+
                 setTimeout(function() {
-                    // === שינוי כאן לקישור של GitHub Pages ===
-                    window.location.href = 'https://vikonder.github.io/MathGame/index2.html'; 
-                }, 2000); // 2000 מילישניות = 2 שניות
+                    window.location.href = 'https://vikonder.github.io/MathGame/index2.html';
+                }, 2500); // הגדלתי מעט את ההמתנה כדי שהמשתמש יספיק לקרוא
 
             } else {
                 feedbackElement.textContent = 'לא נכון. בדוק את החישובים (sin(60°) = ?) ונסה שוב.';

@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl"> <!-- שפה עברית, כיוון מימין לשמאל -->
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משימה: שטח מתחת לחבל</title> <!-- כותרת בעברית -->
+    <title>משימה: שטח מתחת לחבל</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif; /* גופן תומך עברית */
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
             padding: 20px;
             background-color: #f0f8ff;
             color: #333;
-            direction: rtl; /* כיוון הדף */
+            direction: rtl;
         }
         .container {
             background-color: #fff;
@@ -20,11 +20,11 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             max-width: 700px;
             margin: 30px auto;
-            text-align: right; /* יישור טקסט כללי לימין */
+            text-align: right;
         }
         h1 {
             color: #2c3e50;
-            text-align: center; /* כותרת ממורכזת */
+            text-align: center;
             margin-bottom: 20px;
         }
         p {
@@ -36,7 +36,7 @@
             padding: 10px;
             background-color: #ecf0f1;
             border-radius: 5px;
-            text-align: center; /* מרכוז הדיאגרמה והטקסט מתחתיה */
+            text-align: center;
         }
         .diagram-svg {
             max-width: 400px;
@@ -57,7 +57,7 @@
             border-radius: 4px;
             width: 150px;
             font-size: 1em;
-            text-align: right; /* קלט מספרי מימין לשמאל */
+            text-align: right;
         }
         button {
             padding: 12px 25px;
@@ -76,48 +76,36 @@
         #feedback {
             margin-top: 15px;
             font-weight: bold;
-            min-height: 20px;
+            min-height: 20px; /* שומר על גובה גם כשאין טקסט */
             font-size: 1.1em;
-            text-align: center; /* מרכוז הודעת המשוב */
+            text-align: center;
         }
         .correct {
             color: #27ae60;
+            padding: 10px;
+            border: 1px solid #a3d3ab;
+            background-color: #e8f8f5;
+            border-radius: 5px;
+            display: inline-block; /* להתאים את הרקע לטקסט */
+            font-size: 1.2em;
         }
         .incorrect {
             color: #c0392b;
         }
-        #qrCodeContainer {
-            margin-top: 20px;
-            display: none;
-            padding: 15px;
-            border: 1px dashed #27ae60;
-            background-color: #e8f8f5;
-            border-radius: 5px;
-            text-align: center; /* מרכוז תוכן ה-QR */
-        }
-         #qrCodeContainer img {
-            display: block;
-            margin: 10px auto;
-            max-width: 200px;
-            height: auto;
-            border: 1px solid #eee;
-        }
-         #hint {
+        #hint {
             margin-top: 25px;
             font-size: 0.9em;
             color: #7f8c8d;
-            text-align: right; /* יישור הרמז לימין */
+            text-align: right;
             border-top: 1px solid #ecf0f1;
             padding-top: 15px;
          }
          #hint strong {
              color: #2c3e50;
          }
-         /* שינוי סגנון ה-SVG */
-         .diagram-svg text { /* ברירת מחדל ליישור טקסט ב-SVG */
-            text-anchor: end; /* מיישר לימין (ב-SVG) */
+         .diagram-svg text {
+            text-anchor: end;
          }
-
     </style>
 </head>
 <body>
@@ -130,29 +118,19 @@
 
         <div class="diagram-container">
             <svg class="diagram-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-                <!-- קרקע -->
                 <line x1="0" y1="110" x2="200" y2="110" stroke="#8c6d62" stroke-width="3" />
-                 <!-- עמודים -->
                 <line x1="30" y1="110" x2="30" y2="60" stroke="brown" stroke-width="3" />
                 <line x1="170" y1="110" x2="170" y2="60" stroke="brown" stroke-width="3" />
-                <!-- חבל (פרבולה) -->
                 <path d="M 30 60 Q 100 80 170 60" fill="none" stroke="#f39c12" stroke-width="2.5" />
-
-                <!-- מידות -->
-                <!-- גובה עמוד -->
                 <line x1="25" y1="60" x2="25" y2="110" stroke="black" stroke-width="0.5" stroke-dasharray="2,2" />
                 <text x="20" y="90" font-size="8" fill="black">5 מ'</text>
-                 <!-- גובה שמיטה -->
                  <line x1="100" y1="80" x2="100" y2="110" stroke="black" stroke-width="0.5" stroke-dasharray="2,2" />
                  <text x="95" y="100" font-size="8" fill="black">3 מ'</text>
-                 <!-- מרחק בין עמודים -->
                  <line x1="30" y1="115" x2="170" y2="115" stroke="black" stroke-width="0.5" />
                  <line x1="30" y1="112" x2="30" y2="118" stroke="black" stroke-width="0.5" />
                  <line x1="170" y1="112" x2="170" y2="118" stroke="black" stroke-width="0.5" />
                  <text x="108" y="125" font-size="8" fill="black">8 מ'</text>
-                 <!-- תווית שטח S -->
                  <text x="105" y="90" font-size="10" fill="blue" font-style="italic">S = ?</text>
-
             </svg>
         </div>
 
@@ -165,11 +143,7 @@
 
         <p id="feedback"></p>
 
-        <div id="qrCodeContainer">
-            <p class="correct">נכון מאוד! חשיבה אנליטית ודיוק הן נקודות החוזק שלך. הארכיונאי מרוצה. התעלומה הבאה מחכה!</p>
-            <img id="qrImage" src="qr_code_final.png" alt="קוד QR לדף הסיום">
-            <p><small>(סרוק את קוד ה-QR כדי לקבל את הסמל הסופי)</small></p>
-        </div>
+        <!-- div של קוד ה-QR הוסר -->
 
         <div id="hint">
             <strong>רמז:</strong>
@@ -189,36 +163,34 @@
         function checkAnswer() {
             const userAnswerInput = document.getElementById('userAnswer');
             const feedbackElement = document.getElementById('feedback');
-            const qrContainer = document.getElementById('qrCodeContainer');
+            // const qrContainer = document.getElementById('qrCodeContainer'); // כבר לא בשימוש
 
             feedbackElement.textContent = '';
             feedbackElement.className = '';
-            qrContainer.style.display = 'none';
+            // qrContainer.style.display = 'none'; // כבר לא בשימוש
 
             const userAnswer = parseFloat(userAnswerInput.value);
 
             if (isNaN(userAnswer)) {
-                feedbackElement.textContent = 'אנא הזן תשובה מספרית.'; 
+                feedbackElement.textContent = 'אנא הזן תשובה מספרית.';
                 feedbackElement.className = 'incorrect';
                 return;
             }
 
-            const correctAnswer = 29.3; 
-            const tolerance = 0.05; 
+            const correctAnswer = 29.3;
+            const tolerance = 0.05;
 
             if (Math.abs(userAnswer - correctAnswer) < tolerance) {
-                feedbackElement.textContent = ''; 
-                feedbackElement.className = 'correct'; 
-                qrContainer.style.display = 'block'; 
-                
-                // === הפנייה ל-index3.html לאחר הצלחה ===
+                // === שינוי ההודעה במקרה של תשובה נכונה ===
+                feedbackElement.innerHTML = 'נכון מאוד! חשיבה אנליטית ודיוק הן נקודות החוזק שלך.<br>Wait for the next question...';
+                feedbackElement.className = 'correct';
+
                 setTimeout(function() {
-                    window.location.href = 'https://vikonder.github.io/MathGame/index3.html'; 
-                }, 2000); 
-                // ========================================
+                    window.location.href = 'https://vikonder.github.io/MathGame/index3.html'; // שינוי ל- index3.html
+                }, 2500); // הגדלתי מעט את ההמתנה
 
             } else {
-                feedbackElement.textContent = 'לא נכון. בדוק מחדש את משוואת הפרבולה או את חישוב האינטגרל. היעזר ברמז.'; 
+                feedbackElement.textContent = 'לא נכון. בדוק מחדש את משוואת הפרבולה או את חישוב האינטגרל. היעזר ברמז.';
                 feedbackElement.className = 'incorrect';
             }
         }
