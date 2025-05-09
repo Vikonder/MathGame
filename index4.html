@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משימה: שערי הניתוח</title>
+    <style>
+        /* ... (כל סגנונות ה-CSS הקודמים נשארים זהים) ... */
+         body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.7;
+            padding: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+            direction: rtl;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
+        }
+         p {
+             text-align: right;
+             margin-bottom: 15px;
+             color: #333;
+         }
+        .task-description {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .graph-container {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #d6d8db;
+            border-radius: 5px;
+            overflow: auto;
+        }
+        .graph-svg {
+            max-width: 100%;
+            height: auto;
+            min-width: 450px;
+            display: block;
+            margin: 10px auto;
+            font-family: sans-serif;
+        }
+        .questions-area {
+            text-align: right;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f1f7ff;
+            border-right: 4px solid #007bff;
+            border-left: none;
+            border-radius: 4px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #343a40;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 95%;
+            max-width: 300px;
+            font-size: 1em;
+            box-sizing: border-box;
+            direction: ltr;
+            text-align: left;
+        }
+        select {
+            cursor: pointer;
+        }
+         small {
+             display: block;
+             color: #6c757d;
+             font-size: 0.85em;
+             margin-top: 3px;
+              direction: rtl;
+              text-align: right;
+         }
+        button {
+            display: block;
+            width: 200px;
+            padding: 12px 25px;
+            margin: 30px auto 0 auto;
+            background-color: #5a67d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button:hover {
+            background-color: #434190;
+        }
+         button:active {
+             transform: scale(0.98);
+         }
+        #feedback {
+            text-align: center;
+            margin-top: 25px;
+            font-weight: bold;
+            min-height: 25px;
+            font-size: 1.1em;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .correct-feedback {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .incorrect-feedback {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        #qrCodeContainer {
+            margin-top: 25px;
+            display: none;
+            padding: 20px;
+            border: 2px dashed #28a745;
+            background-color: #f0fff8;
+            border-radius: 8px;
+            text-align: center;
+        }
+         #qrCodeContainer img {
+            display: block;
+            margin: 15px auto 10px auto;
+            max-width: 220px;
+            height: auto;
+            border: 1px solid #eee;
+         }
+         .graph-svg text {
+             direction: ltr;
+             text-anchor: middle;
+         }
+         .graph-svg .axis-label {
+             text-anchor: end;
+         }
+        .graph-svg .tick-label-x {
+            text-anchor: middle;
+        }
+         .graph-svg .tick-label-y {
+            text-anchor: end;
+            dominant-baseline: middle;
+         }
+         .graph-svg .extrema-label {
+             font-size: 0.6px;
+             fill: #444;
+             font-weight: bold;
+         }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>שערי הניתוח</h1>
+
+        <div class="task-description">
+             <p>לפניכם שערי הניתוח. על השער משורטט גרף של הפונקציה <span style="font-style: italic; font-weight: bold;">y = f(x) </span>. כדי לעבור הלאה, עליכם להוכיח את הבנתכם בהתנהגות הפונקציה באמצעות מענה על מספר שאלות. רק תשובות נכונות על כל השאלות יפתחו את המעבר!</p>
+        </div>
+
+        <div class="graph-container">
+             <p style="font-weight:bold;">גרף הפונקציה <span style="font-style: italic;">y = f(x)</span>:</p>
+             <!-- SVG для y = 0.2(x+4)(x+1)(x-2) -->
+             <svg class="graph-svg" viewBox="-7 -5 12 10" xmlns="http://www.w3.org/2000/svg">
+                 <!-- Сетка -->
+                 <defs>
+                    <pattern id="gridPattern" width="1" height="1" patternUnits="userSpaceOnUse">
+                        <path d="M 1 0 L 0 0 0 1" fill="none" stroke="#e0e0e0" stroke-width="0.03"/>
+                    </pattern>
+                 </defs>
+                 <rect x="-7" y="-5" width="12" height="10" fill="url(#gridPattern)" />
+
+                 <!-- Оси -->
+                 <line x1="-7" y1="0" x2="5" y2="0" stroke="#333" stroke-width="0.05"/>
+                 <line x1="0" y1="5" x2="0" y2="-5" stroke="#333" stroke-width="0.05"/>
+                 <polygon points="5,0 4.8,-0.15 4.8,0.15" fill="#333" />
+                 <polygon points="0,-5 -0.15,-4.8 0.15,-4.8" fill="#333" />
+                 <text x="4.7" y="0.4" font-size="0.4" fill="#333" class="axis-label-x">x</text>
+                 <text x="0.4" y="-4.7" font-size="0.4" fill="#333" class="axis-label">y</text>
+
+                <text x="-6.5" y="-4" class="function-label" style="font-size:0.5px; direction:ltr; text-anchor:start;">
+                    y = 0.2(x<tspan style="baseline-shift: super; font-size: 0.35px;">3</tspan> + 3x<tspan style="baseline-shift: super; font-size: 0.35px;">2</tspan> - 6x - 8)
+                </text>
+
+                 <path d="M -5 5.6 C -4.5 0.5, -3.5 -1.8, -2.732 -2.078 C -2.0 -1.8, -1.5 -0.5, -1 0 C -0.5 1.3, 0 1.9, 0.732 2.078 C 1.5 1.8, 1.8 0.5, 2 0 C 2.5 -2.5, 3 -5.6, 3.5 -8"
+                       fill="none" stroke="#4A86E8" stroke-width="0.2" stroke-linecap="round"/>
+                 <path d="M -5 5.6 C -4.5 0.5, -3.5 -1.8, -2.732 -2.078 C -2.0 -1.8, -1.5 -0.5, -1 0 C -0.5 1.3, 0 1.9, 0.732 2.078 C 1.5 1.8, 1.8 0.5, 2 0 C 2.5 -2.5, 3 -5.6, 3.5 -8"
+                       fill="none" stroke="rgba(74,134,232,0.3)" stroke-width="0.6" stroke-linecap="round" />
+
+                 <circle cx="-4" cy="0" r="0.1" fill="red" />
+                 <circle cx="-1" cy="0" r="0.1" fill="red" />
+                 <circle cx="2" cy="0" r="0.1" fill="red" />
+                 <circle cx="-2.732" cy="-2.078" r="0.1" fill="orange" />
+                 <text x="-2.732" y="-2.6" class="extrema-label"></text>
+                 <circle cx="0.732" cy="2.078" r="0.1" fill="orange" />
+                 <text x="0.732" y="2.6" class="extrema-label"></text>
+             </svg>
+              <p style="font-size:0.9em; color: #6c757d;">(נקודות אדומות - חיתוך עם ציר X, נקודה כתומה - מקסימום מקומי, נקודה כחולה - מינימום מקומי).</p>
+        </div>
+
+        <div class="questions-area">
+            <div class="question-block">
+                 <label for="q1_function_type">1. לאיזה סוג שייכת הפונקציה המוצגת בגרף, קרוב לוודאי?</label>
+                 <select id="q1_function_type" style="direction: ltr; text-align: left;">
+                    <option value="">-- בחר סוג --</option>
+					<option value="linear">ליניארי </option>
+                    <option value="quadratic">ריבועית </option>
+                    <option value="cubic">מעוקל </option>
+                    <option value="exponential">אקספוננציאלית </option>
+                </select>
+            </div>
+
+            <div class="question-block">
+                 <label for="q2_intersections">2. רשום את שיעורי ה-x של נקודות החיתוך עם ציר X (הפרד בפסיק).</label>
+                <input type="text" id="q2_intersections" placeholder="2, 4, 5" style="direction: ltr; text-align: left;">
+            </div>
+
+            <div class="question-block">
+                <label for="q3_max_value">3. מהו הערך המשוער של <span style="font-weight:normal; direction:ltr; display:inline-block;">y</span> בנקודת המקסימום המקומית? <small>(עגל לספרה אחת אחרי הנקודה)</small></label>
+                <input type="number" id="q3_max_value" step="0.1" placeholder="לדוגמה: 1.5" style="direction: ltr; text-align: left;">
+            </div>
+
+             <div class="question-block">
+                <label for="q4_min_value">4. מהו הערך המשוער של <span style="font-weight:normal; direction:ltr; display:inline-block;">y</span> בנקודת המינימום המקומית? <small>(עגל לספרה אחת אחרי הנקודה)</small></label>
+                <input type="number" id="q4_min_value" step="0.1" placeholder="לדוגמה: 3.2" style="direction: ltr; text-align: left;">
+            </div>
+        </div>
+
+        <button onclick="checkAnswers()">בדיקת הכניסה</button>
+
+        <div id="feedback"></div>
+
+        <div id="qrCodeContainer">
+            <p style="font-size:1.1em;"><strong>הניתוח נכון!</strong> השערים נפתחים בפני חוכמתך.</p>
+            <img id="qrImage" src="qr_code_next_gate.png" alt="קוד QR לשלב הבא">
+            <p><small>(סרוק את הקוד כדי להמשיך הלאה)</small></p>
+        </div>
+    </div>
+
+    <script>
+       function checkAnswers() {
+            const feedbackElement = document.getElementById('feedback');
+            const qrContainer = document.getElementById('qrCodeContainer');
+
+            feedbackElement.innerHTML = '';
+            feedbackElement.className = '';
+            qrContainer.style.display = 'none';
+
+            const q1Answer = document.getElementById('q1_function_type').value;
+            const q2AnswerRaw = document.getElementById('q2_intersections').value;
+            const q3UserMaxValue = parseFloat(document.getElementById('q3_max_value').value);
+            const q4UserMinValue = parseFloat(document.getElementById('q4_min_value').value);
+
+            const correctQ1 = "cubic";
+            const correctQ2 = [-4, -1, 2]; 
+            const correctMaxY = 2.1; // מעוגל לפי הנדרש
+            const correctMinY = -2.1; // מעוגל לפי הנדרש
+            const numberToleranceExtrema = 0.15; 
+
+            let allCorrect = true;
+
+            if (q1Answer !== correctQ1) {
+                allCorrect = false;
+                appendFeedback('שאלה 1: סוג הפונקציה שגוי.', 'incorrect');
+            }
+
+            try {
+                const userIntersections = q2AnswerRaw.split(',')
+                                               .map(s => parseFloat(s.trim()))
+                                               .filter(n => !isNaN(n))
+                                               .sort((a, b) => a - b);
+                if (userIntersections.length !== correctQ2.length ||
+                    !userIntersections.every((val, index) => Math.abs(val - correctQ2[index]) < 0.01)) {
+                    allCorrect = false;
+                    appendFeedback('שאלה 2: נקודות החיתוך עם ציר X אינן נכונות. הן צריכות להיות -4, -1, 2.', 'incorrect');
+                }
+            } catch (e) {
+                allCorrect = false;
+                appendFeedback('שאלה 2: שגיאה בפורמט הזנת נקודות החיתוך.', 'incorrect');
+            }
+
+            if (isNaN(q3UserMaxValue) || Math.abs(q3UserMaxValue - correctMaxY) > numberToleranceExtrema) {
+                allCorrect = false;
+                appendFeedback(`שאלה 3: הערך המשוער של y במקסימום המקומי אינו נכון (צפוי להיות סביב ${correctMaxY}).`, 'incorrect');
+            }
+
+            if (isNaN(q4UserMinValue) || Math.abs(q4UserMinValue - correctMinY) > numberToleranceExtrema) {
+                allCorrect = false;
+                appendFeedback(`שאלה 4: הערך המשוער של y במינימום המקומי אינו נכון (צפוי להיות סביב ${correctMinY}).`, 'incorrect');
+            }
+
+
+            if (allCorrect) {
+                feedbackElement.innerHTML = '';
+                feedbackElement.className = 'correct-feedback';
+                feedbackElement.textContent = 'הניתוח נכון!';
+                qrContainer.style.display = 'block';
+
+                // === הפנייה ל-index5.html לאחר הצלחה ===
+                setTimeout(function() {
+                    window.location.href = 'https://vikonder.github.io/MathGame/index5.html';
+                }, 2000);
+                // ========================================
+
+            } else {
+                 if (feedbackElement.innerHTML === '') {
+                     feedbackElement.textContent = 'זוהו שגיאות בניתוח הגרף.';
+                 }
+                 feedbackElement.className = 'incorrect-feedback';
+                 qrContainer.style.display = 'none';
+            }
+        }
+
+        function appendFeedback(message, className) {
+            const feedbackElement = document.getElementById('feedback');
+            const newMessage = document.createElement('p');
+            newMessage.style.margin = '5px 0';
+            newMessage.textContent = message;
+            feedbackElement.appendChild(newMessage);
+            if (!feedbackElement.classList.contains('incorrect-feedback') && !feedbackElement.classList.contains('correct-feedback')) {
+                 feedbackElement.className = 'incorrect-feedback';
+            }
+        }
+    </script>
+
+</body>
+</html>

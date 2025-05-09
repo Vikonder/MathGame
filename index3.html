@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משימה: מנעול הקוד של הארכיונאי</title>
+    <style>
+        /* ... (כל סגנונות ה-CSS הקודמים נשארים זהים) ... */
+         body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.7;
+            padding: 20px;
+            background-color: #e9ebee;
+            color: #333;
+            direction: rtl;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 750px;
+            margin: 40px auto;
+            text-align: center;
+        }
+        h1 {
+            color: #1d4e89;
+            border-bottom: 2px solid #d1e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
+        p {
+            color: #444;
+            margin-bottom: 18px;
+             text-align: right;
+        }
+        .task-description {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 25px;
+            text-align: right;
+        }
+        .task-description ul {
+            padding-right: 20px;
+        }
+        .task-description li {
+             margin-bottom: 8px;
+        }
+        /* הוספת סגנון להסבר */
+        .explanation {
+            font-size: 0.9em;
+            color: #6c757d;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .equations-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f1f3f5;
+            border-radius: 5px;
+        }
+        .equation {
+            margin: 10px;
+            padding: 15px;
+            border: 1px dashed #adb5bd;
+            border-radius: 4px;
+            min-width: 250px;
+            text-align: center;
+        }
+        .equation-title {
+            font-weight: bold;
+            color: #1d4e89;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .code-input-area {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        label {
+            display: inline-block;
+            margin: 0 0 5px 10px;
+            font-weight: bold;
+            color: #495057;
+        }
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 60px;
+            font-size: 1.2em;
+            text-align: center;
+            margin-left: 10px;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+             -webkit-appearance: none;
+             margin: 0;
+        }
+        button {
+            padding: 12px 30px;
+            margin-top: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+         button:active {
+             transform: scale(0.98);
+         }
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 25px;
+            font-size: 1.1em;
+        }
+        .correct {
+            color: #28a745;
+        }
+        .incorrect {
+            color: #dc3545;
+        }
+        #qrCodeContainer {
+            margin-top: 25px;
+            display: none;
+            padding: 20px;
+            border: 2px solid #28a745;
+            background-color: #f0fff4;
+            border-radius: 8px;
+            text-align: center;
+        }
+         #qrCodeContainer img {
+            display: block;
+            margin: 15px auto 10px auto;
+            max-width: 220px;
+            height: auto;
+            border: 1px solid #ccc;
+         }
+         .lock-image-container img {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+            opacity: 0.8;
+         }
+         .math {
+             font-family: 'Times New Roman', serif;
+             font-style: italic;
+             direction: ltr;
+             display: inline-block;
+         }
+         .sup {
+             vertical-align: super;
+             font-size: 0.8em;
+         }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>משימה: מנעול הקוד של הארכיונאי</h1>
+
+        <div class="lock-image-container">
+            <!-- <img src="lock_image.png" alt="מנעול קוד"> -->
+        </div>
+
+        <div class="task-description">
+            <p>הדלת לאולם הבא בספריית הארכיונאי נעולה במנעול קוד. הצופן מורכב מ<strong>שתי ספרות</strong>.</p>
+            <p>כדי למצוא את הקוד, עליכם לפתור שתי משוואות ריבועיות.</p>
+            <ul>
+                <li><strong>הספרה הראשונה של הקוד</strong> היא השורש ה<strong>שלם החיובי הגדול ביותר</strong> של המשוואה הראשונה (הפשוטה).</li>
+                <li><strong>הספרה השנייה של הקוד</strong> היא השורש ה<strong>שלם החיובי</strong> של המשוואה השנייה (עם השורשים).</li>
+            </ul>
+            <div class="explanation">
+                <p><strong>תזכורת: מהו שורש שלם?</strong></p>
+                <p>שורש שלם של משוואה הוא פתרון (ערך של x) המהווה מספר שלם (ללא שבר או חלק עשרוני), כגון ..., -3, -2, -1, 0, 1, 2, 3, ....</p>
+                <p><em>לדוגמה:</em> למשוואה <span class="math">x² - 4 = 0</span> יש שני שורשים: x = 2 ו- x = -2. שניהם מספרים שלמים, ולכן שניהם שורשים שלמים. השורש השלם החיובי הוא 2.</p>
+                <p>למשוואה <span class="math">x² - 2 = 0</span> יש שני שורשים: x = √2 ו- x = -√2. מספרים אלו אינם שלמים, ולכן למשוואה זו *אין* שורשים שלמים.</p>
+            </div>
+        </div>
+
+        <div class="equations-container">
+            <div class="equation">
+                <div class="equation-title">משוואה 1 (פשוטה)</div>
+                <p class="math">x<span class="sup">2</span> - 5x + 6 = 0</p>
+            </div>
+            <div class="equation">
+                <div class="equation-title">משוואה 2 (עם שורשים)</div>
+                <p class="math">x² - (5 + √2)x + 5√2 = 0</p>
+            </div>
+        </div>
+
+        <div class="code-input-area">
+            <label for="digit1">הספרה הראשונה:</label>
+            <input type="number" id="digit1" min="0" max="9" required>
+
+            <label for="digit2">הספרה השנייה:</label>
+            <input type="number" id="digit2" min="0" max="9" required>
+        </div>
+
+        <button onclick="checkCode()">פתיחת המנעול</button>
+
+        <p id="feedback"></p>
+
+        <div id="qrCodeContainer">
+            <p class="correct">המנעול נפתח! התושייה והידע המתמטי שלכם מרשימים.</p>
+            <img id="qrImage" src="qr_code_next_level.png" alt="קוד QR לשלב הבא">
+            <p><small>(סרוק את קוד ה-QR כדי לגשת לסוד הבא של הארכיונאי)</small></p>
+        </div>
+    </div>
+
+    <script>
+        function checkCode() {
+            const digit1Input = document.getElementById('digit1');
+            const digit2Input = document.getElementById('digit2');
+            const feedbackElement = document.getElementById('feedback');
+            const qrContainer = document.getElementById('qrCodeContainer');
+
+            feedbackElement.textContent = '';
+            feedbackElement.className = '';
+            qrContainer.style.display = 'none';
+
+            const correctDigit1 = 3;
+            const correctDigit2 = 5;
+
+            const userDigit1Str = digit1Input.value;
+            const userDigit2Str = digit2Input.value;
+
+            if (!/^[0-9]$/.test(userDigit1Str) || !/^[0-9]$/.test(userDigit2Str)) {
+                 feedbackElement.textContent = 'אנא הזן ספרה בודדת (0-9) בכל שדה.';
+                 feedbackElement.className = 'incorrect';
+                 return;
+            }
+
+            const userDigit1 = parseInt(userDigit1Str);
+            const userDigit2 = parseInt(userDigit2Str);
+
+            if (userDigit1 === correctDigit1 && userDigit2 === correctDigit2) {
+                feedbackElement.textContent = '';
+                feedbackElement.className = 'correct';
+                qrContainer.style.display = 'block';
+
+                // === הפנייה ל-index4.html לאחר הצלחה ===
+                setTimeout(function() {
+                    window.location.href = 'https://vikonder.github.io/MathGame/index4.html';
+                }, 2000); // 2000 מילישניות = 2 שניות
+                // ========================================
+
+            } else {
+                feedbackElement.textContent = 'קוד שגוי. פתור מחדש את המשוואות ובדוק אילו שורשים בחרת.';
+                feedbackElement.className = 'incorrect';
+            }
+        }
+    </script>
+
+</body>
+</html>

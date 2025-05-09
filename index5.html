@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>משימה: תכנון מגלשת החלומות</title>
+    <style>
+        body {
+            direction: rtl;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+            background: linear-gradient(to bottom, #87CEEB, #B0E0E6);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-x: hidden;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+            max-width: 750px;
+            margin-top: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        h1 {
+            color: #005A9C;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+        }
+        p, li {
+            color: #2F4F4F;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            text-align: right;
+        }
+        ul {
+            padding-right: 20px;
+            list-style-type: disc;
+        }
+        .task-description {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ADD8E6;
+        }
+        .diagram-container {
+            margin: 20px auto;
+            max-width: 350px;
+        }
+        .equation-display-text {
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .equation-form {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.4em;
+            font-style: italic;
+            margin: 0 0 20px 0;
+            color: #1d4e89;
+            direction: ltr;
+            text-align: center;
+        }
+        .input-coefficients-wrapper {
+            direction: ltr;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .input-coefficients-wrapper label {
+             margin: 0 5px 0 15px;
+             font-size: 1.2em;
+             color: #333;
+             direction: rtl;
+             display: inline-block;
+        }
+        input[type="number"].coeff-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80px;
+            font-size: 1.1em;
+            text-align: center;
+            direction: ltr;
+            -moz-appearance: textfield;
+            display: inline-block;
+        }
+        input[type="number"].coeff-input::-webkit-outer-spin-button,
+        input[type="number"].coeff-input::-webkit-inner-spin-button {
+             -webkit-appearance: none;
+             margin: 0;
+        }
+        button {
+            padding: 12px 35px;
+            margin-top: 25px;
+            background: linear-gradient(to bottom, #f7b733, #fc4a1a);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+        button:hover {
+            opacity: 0.9;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        button:active {
+            transform: scale(0.97);
+        }
+        #feedback {
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 25px;
+            font-size: 1.1em;
+        }
+        #feedback.correct { /* Стиль для правильного ответа */
+            color: #28a745;
+        }
+        #feedback.incorrect { /* Стиль для неправильного ответа */
+            color: #d9534f;
+        }
+        #finalCodeContainer {
+            margin-top: 25px;
+            display: none;
+            padding: 25px;
+            border: 2px solid #5cb85c;
+            background-color: #f0fff0;
+            border-radius: 8px;
+            text-align: center;
+        }
+        #finalCode {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #337ab7;
+            letter-spacing: 5px;
+            background-color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+        #fireworksCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            display: none;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+        .math-inline {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            direction: ltr;
+            display: inline-block;
+        }
+        .sup {
+            vertical-align: super;
+            font-size: 0.7em;
+        }
+        .hint {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fafafa;
+            border: 1px dashed #ddd;
+            border-radius: 4px;
+            text-align: right;
+        }
+        .hint strong {
+            color: #005A9C;
+        }
+        .code-rule {
+            margin-top:10px;
+            padding: 10px;
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 4px;
+        }
+        .code-rule strong {
+            color: #c77a03;
+        }
+        .code-example {
+            font-family: monospace;
+            background-color: #f0f0f0;
+            padding: 2px 5px;
+            border-radius: 3px;
+            direction: ltr;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+  <canvas id="fireworksCanvas"></canvas>
+
+  <div class="container">
+    <h1>משימה: תכנון מגלשת החלומות!</h1>
+    <div class="task-description">
+      <p>דמיינו שאתם בקומה החמישית (נקודה A, גובה <strong>10 מטרים</strong> מעל פני הקרקע, נבחר אותה כ- x=0), מביטים אל הים שנמצא במרחק אופקי של <strong>10 מטרים</strong> מהבניין (נקודה C, בגובה פני הים, x=10). החלטתם לבנות מגלשה חלקה ויפה מהחלון עד לקו המים!</p>
+      <p>כדי שהירידה תהיה נעימה, המגלשה צריכה לעבור גם דרך נקודת ביניים B, שנמצאת במרחק אופקי של **5 מטרים** מהבניין ובגובה של **4 מטרים** מעל פני הקרקע.</p>
+      <p class="equation-display-text">צורת המגלשה תהיה פרבולה מהצורה:</p>
+      <div class="equation-form">
+        y = ax<span class="sup">2</span> + bx + c
+      </div>
+    </div>
+
+    <div class="diagram-container">
+      <!-- SVG -->
+      <svg class="graph-svg" viewBox="-1 -3 20 15" xmlns="http://www.w3.org/2000/svg">
+        <rect x="-1" y="-3" width="21" height="11" fill="#87CEEB"/>
+        <rect x="-1" y="8" width="21" height="7" fill="#5dade2"/>
+        <text x="1" y="-2" font-size="1" fill="#003366" text-anchor="start">בית</text>
+        <text x="18" y="9.5" font-size="1" fill="#003366" text-anchor="end">ים</text>
+        <rect x="-0.5" y="-2" width="1.5" height="12" fill="#d2b48c"/>
+        <rect x="-0.2" y="-2" width="0.9" height="2" fill="#add8e6"/>
+        <line x1="-1" y1="10" x2="20" y2="10" stroke="#696969" stroke-width="0.05" stroke-dasharray="0.2,0.2"/>
+        <text x="0.5" y="10.8" font-size="0.5" fill="#333" text-anchor="middle">x=0 (בסיס הבניין)</text>
+        <text x="10.5" y="10.8" font-size="0.5" fill="#333" text-anchor="middle">x=10 (קו המים)</text>
+        <text x="-0.5" y="0" font-size="0.5" fill="#333" text-anchor="end">y=10 (חלון)</text>
+        <text x="-0.5" y="10" font-size="0.5" fill="#333" text-anchor="end">y=0 (פני הים)</text>
+        <g transform="translate(0, 10) scale(1, -1)">
+            <circle cx="0" cy="10" r="0.2" fill="red"/>
+            <text x="0" y="10.8" font-size="0.5" fill="red" text-anchor="middle">A (0,10)</text>
+            <circle cx="5" cy="4" r="0.2" fill="green"/>
+            <text x="5" y="3.2" font-size="0.5" fill="green" text-anchor="middle">B (5,4)</text>
+            <circle cx="10" cy="0" r="0.2" fill="red"/>
+            <text x="10" y="-0.8" font-size="0.5" fill="red" text-anchor="middle">C (10,0)</text>
+            <path d="M 0 10 C 2.5 8, 7.5 -1, 10 0" fill="none" stroke="#f39c12" stroke-width="0.2" />
+            <circle cx="17.5" cy="-2.25" r="0.2" fill="purple" opacity="0.5"/>
+            <text x="17.5" y="-1.5" font-size="0.5" fill="purple" text-anchor="middle" opacity="0.7">(קודקוד x=17.5)</text>
+        </g>
+      </svg>
+    </div>
+
+    <p><strong>המשימה שלכם:</strong></p>
+    <ol>
+        <li>מצאו את ערכי המקדמים <strong>a, b, c</strong> של משוואת הפרבולה.</li>
+        <li>
+            <div class="code-rule">
+            <strong>הקוד הסודי</strong> לפתיחת השלב הבא מורכב מ-<strong>5 ספרות</strong>. כדי ליצור אותו:
+            
+            <p><strong>סיכום הכלל לדוגמה עם a=0.05, b=-0.4, c=22:</strong>
+                <br>1. `round(|0.05|*100) = 5`. הספרה הראשונה: **5**.
+                <br>2. `round(|-2.7|*10) = 27`. שתי הספרות: **27**.
+                <br>3. `round(|22) = 22`. שתי הספרות: **22**.
+                <br>הקוד המורכב: <span class="code-example">52722</span>.
+				<br> ----- הזן את הערך שהתקבל a b c לחץ על כפתור "בנה....." והקוד ייווצר אוטומטית  -----
+				
+            </p>
+            </div>
+        </li>
+    </ol>
+
+    <div class="input-coefficients-wrapper">
+      <label for="coeff_a">:a</label> <!-- Метка справа от поля в LTR контейнере, если сам label RTL -->
+      <input type="number" class="coeff-input" id="coeff_a" step="0.001" placeholder="0.000">
+      <label for="coeff_b">:b</label>
+      <input type="number" class="coeff-input" id="coeff_b" step="0.01" placeholder="0.00">
+      <label for="coeff_c">:c</label>
+      <input type="number" class="coeff-input" id="coeff_c" step="0.01" placeholder="0.00">
+    </div>
+
+    <button onclick="checkCoefficients()">בנה את המגלשה ובדוק קוד!</button>
+
+    <div id="feedback"></div>
+
+    <div id="finalCodeContainer">
+      <h2>כל הכבוד! החישובים למגלשה נכונים!</h2>
+      <p>הקוד הסודי של הארכיונאי, המוכיח את מומחיותך:</p>
+      <div id="finalCode">?????</div>
+      <p style="margin-top: 20px;">המגלשה שלך מוכנה לירידה מרגשת! הארכיונאי גאה בך!</p>
+    </div>
+
+    <div class="hint">
+        <strong>רמז לפתרון מערכת המשוואות:</strong>
+        <ol>
+            <li>הציבו כל אחת משלוש הנקודות הנתונות ((0,10), (5,4), (10,0)) במשוואת הפרבולה <span class="math-inline">y = ax<span class="sup">2</span> + bx + c</span>.</li>
+            <li>תקבלו מערכת של שלוש משוואות לינאריות עם שלושה נעלמים: a, b, c.</li>
+            <li>מהמשוואה הראשונה (עם הנקודה (0,10)), תוכלו למצוא מיד את הערך של c.</li>
+            <li>הציבו את ערך c שמצאתם בשתי המשוואות האחרות, וקבלו מערכת של שתי משוואות עם שני נעלמים (a, b).</li>
+            <li>פתרו את המערכת הקטנה יותר כדי למצוא את a ו-b.</li>
+        </ol>
+    </div>
+
+  </div>
+
+  <script>
+    // --- Код JavaScript для салюта ---
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.size = Math.random() * 2 + 1; this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5; this.alpha = 1; this.decay = Math.random() * 0.02 + 0.01;} update() { this.x += this.speedX; this.y += this.speedY; this.alpha -= this.decay;} draw() { ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();}}
+    class Firework { constructor(x, y) { this.x = x; this.y = y; this.particles = []; const hue = Math.random() * 360; const color = `hsl(${hue}, 100%, 70%)`; const particleCount = 50 + Math.random() * 50; for (let i = 0; i < particleCount; i++) {this.particles.push(new Particle(this.x, this.y, color));}} update() { this.particles.forEach((p, index) => { p.update(); if (p.alpha <= 0) this.particles.splice(index, 1); });} draw() { this.particles.forEach(p => p.draw()); }}
+    let animationFrameId; function animateFireworks() { ctx.fillStyle = 'rgba(0, 0, 0, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height); ctx.globalAlpha = 1; fireworks.forEach((fw, index) => { fw.update(); fw.draw(); if (fw.particles.length === 0) fireworks.splice(index, 1); }); if (fireworks.length > 0) animationFrameId = requestAnimationFrame(animateFireworks); else canvas.style.display = 'none';}
+    function launchFireworks() { resizeCanvas(); canvas.style.display = 'block'; cancelAnimationFrame(animationFrameId); for(let i=0; i< 5; i++) {fireworks.push(new Firework(canvas.width * (0.2 + Math.random() * 0.6), canvas.height * (0.3 + Math.random() * 0.4)));} fireworks.push(new Firework(canvas.width / 2, canvas.height / 2)); animateFireworks();}
+    window.addEventListener('resize', resizeCanvas);
+    // --- Конец кода салюта ---
+
+    // Основная логика
+    function checkCoefficients() {
+        const feedbackElement = document.getElementById('feedback');
+        const codeContainer = document.getElementById('finalCodeContainer');
+        const finalCodeDisplay = document.getElementById('finalCode');
+
+        feedbackElement.textContent = '';
+        feedbackElement.className = ''; // Сброс класса цвета
+        codeContainer.style.display = 'none';
+
+        const a_user_str = document.getElementById('coeff_a').value;
+        const b_user_str = document.getElementById('coeff_b').value;
+        const c_user_str = document.getElementById('coeff_c').value;
+
+        const a_user = parseFloat(a_user_str);
+        const b_user = parseFloat(b_user_str);
+        const c_user = parseFloat(c_user_str);
+
+        if (isNaN(a_user) || isNaN(b_user) || isNaN(c_user)) {
+            feedbackElement.textContent = 'אנא הזן ערכים מספריים לכל המקדמים (a, b, c).';
+            feedbackElement.className = 'incorrect';
+            return;
+        }
+
+        const correct_a = 0.04;
+        const correct_b = -1.4;
+        const correct_c = 10;
+        const tolerance = 0.009; // Увеличенный допуск
+
+        let a_correct = Math.abs(a_user - correct_a) < tolerance;
+        let b_correct = Math.abs(b_user - correct_b) < tolerance;
+        let c_correct = Math.abs(c_user - correct_c) < tolerance;
+
+        if (a_correct && b_correct && c_correct) {
+            let a_val_calc = Math.round(Math.abs(correct_a) * 100); // 4
+            let b_val_calc = Math.round(Math.abs(correct_b) * 10);  // 14
+            let c_val_calc = Math.round(Math.abs(correct_c));       // 10
+
+            let firstDigitFromA = a_val_calc.toString();
+            if (firstDigitFromA.length > 1) {
+                firstDigitFromA = firstDigitFromA.slice(-1);
+            }
+
+            let b_code_str = b_val_calc.toString().padStart(2, '0');
+            let c_code_str = c_val_calc.toString().padStart(2, '0');
+
+            const secretCode = firstDigitFromA + b_code_str + c_code_str; // "41410"
+
+            feedbackElement.textContent = ''; // Очищаем, если было сообщение об ошибке
+            feedbackElement.className = 'correct'; // Применяем стиль успеха
+            finalCodeDisplay.textContent = secretCode;
+            codeContainer.style.display = 'block';
+            launchFireworks();
+        } else {
+            let errorMessage = 'המקדמים שהזנת אינם נכונים. בדוק את החישובים שלך. ';
+
+            errorMessage += 'היעזר ברמז אם צריך.';
+            feedbackElement.textContent = errorMessage;
+            feedbackElement.className = 'incorrect';
+        }
+    }
+    document.getElementById('coeff_a').addEventListener('input', () => { feedbackElement.textContent = ''; feedbackElement.className = ''; });
+    document.getElementById('coeff_b').addEventListener('input', () => { feedbackElement.textContent = ''; feedbackElement.className = ''; });
+    document.getElementById('coeff_c').addEventListener('input', () => { feedbackElement.textContent = ''; feedbackElement.className = ''; });
+  </script>
+</body>
+</html>

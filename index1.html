@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl"> <!-- Changed lang to he and added dir="rtl" -->
+<html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>משימה: זווית נטיית החבל</title> <!-- Title in Hebrew -->
+    <title>משימה: זווית נטיית החבל</title>
     <style>
+        /* העתק לכאן את כל סגנונות ה-CSS מהקוד הקודם שלך */
         body {
-            font-family: 'Arial', sans-serif; /* Arial is common for Hebrew too */
+            font-family: 'Arial', sans-serif;
             line-height: 1.6;
             padding: 20px;
             background-color: #f4f4f4;
-            direction: rtl; /* Right-to-left direction */
+            direction: rtl;
         }
         .container {
             background-color: #fff;
@@ -19,14 +20,14 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             max-width: 600px;
             margin: 30px auto;
-            text-align: center; /* General centering */
+            text-align: center;
         }
         h1 {
             color: #333;
         }
         p {
             color: #555;
-            text-align: right; /* Align paragraphs right */
+            text-align: right;
             margin-bottom: 15px;
         }
         .diagram-container {
@@ -44,7 +45,7 @@
             margin-top: 15px;
             font-weight: bold;
             color: #444;
-            text-align: right; /* Align label right */
+            text-align: right;
         }
         input[type="number"] {
             padding: 10px;
@@ -53,7 +54,7 @@
             border-radius: 4px;
             width: 150px;
             font-size: 1em;
-            text-align: right; /* Align input text right */
+            text-align: right;
         }
         button {
             padding: 10px 20px;
@@ -80,7 +81,6 @@
         .incorrect {
             color: red;
         }
-         /* הסתרתי את קונטיינר ה-QR כברירת מחדל, כי אנו מפנים ישירות */
         #qrCodeContainer {
             margin-top: 20px;
             display: none;
@@ -108,7 +108,6 @@
         <p>מחולן הנמצא בגובה <strong>10 מטרים</strong> מעל פני הקרקע משתלשל חבל. זווית הנטייה של החבל ביחס ל<strong>אופק (הקרקע)</strong> היא <strong>60 מעלות</strong>.</p>
 
         <div class="diagram-container">
-             <!-- SVG נשאר LTR לציור נכון -->
             <svg class="diagram-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="direction: ltr;">
                 <line x1="50" y1="150" x2="50" y2="50" stroke="black" stroke-width="2" />
                 <text x="55" y="105" font-size="10" fill="black" text-anchor="start">10 מ'</text>
@@ -126,13 +125,12 @@
         <p><strong>משימה:</strong> חשבו את אורך החבל המשתלשל (היתר, L). הזינו את התשובה בדיוק של ספרה אחת אחרי הנקודה העשרונית (לדוגמה, 12.3).</p>
 
         <label for="userAnswer">התשובה שלך (L במטרים):</label>
-        <input type="number" id="userAnswer" step="0.1" placeholder="לדוגמה: 11.5"> <!-- תיקנתי את הפלייסהולדר לתשובה הנכונה -->
+        <input type="number" id="userAnswer" step="0.1" placeholder="לדוגמה: 11.5">
 
         <button onclick="checkAnswer()">בדיקת תשובה</button>
 
         <p id="feedback"></p>
 
-        <!-- קונטיינר ה-QR נשאר למקרה שתרצה להחזיר אותו, אבל מוסתר -->
         <div id="qrCodeContainer">
             <p style="color:green; font-weight:bold;">מצוין! הנה המפתח למשימה הבאה:</p>
             <img id="qrImage" src="qr_code_next.png" alt="קוד QR למשימה הבאה">
@@ -144,13 +142,12 @@
         function checkAnswer() {
             const userAnswerInput = document.getElementById('userAnswer');
             const feedbackElement = document.getElementById('feedback');
-            const qrContainer = document.getElementById('qrCodeContainer'); // עדיין צריך אותו אם נרצה להציגו
+            const qrContainer = document.getElementById('qrCodeContainer');
 
             feedbackElement.textContent = '';
             feedbackElement.className = '';
-            qrContainer.style.display = 'none'; // לוודא שהוא מוסתר
+            qrContainer.style.display = 'none';
 
-            // --- בדיקת קלט ---
             if (userAnswerInput.value.trim() === '') {
                  feedbackElement.textContent = 'אנא הזן תשובה.';
                  feedbackElement.className = 'incorrect';
@@ -165,26 +162,20 @@
                 return;
             }
 
-            // --- החישוב הנכון ---
-            // L = גובה / sin(זווית מול הגובה)
-            // L = 10 / sin(60°)
-            // sin(60°) = sqrt(3) / 2
-            // L = 10 / (sqrt(3) / 2) = 20 / sqrt(3) ≈ 11.547
-            const correctAnswer = 11.5; // נעגל לספרה אחת אחרי הנקודה
-            const tolerance = 0.05; // טווח סבילות לעיגול
+            const correctAnswer = 11.5;
+            const tolerance = 0.05; 
 
-            // --- בדיקת התשובה והפנייה ---
             if (Math.abs(userAnswer - correctAnswer) < tolerance) {
                 feedbackElement.textContent = 'נכון! מעולה! מיד תועבר למשימה הבאה...';
                 feedbackElement.className = 'correct';
-
-                // המתנה קצרה (2 שניות) ואז הפנייה
+                
                 setTimeout(function() {
-                    window.location.href = 'index2.html'; // הפנייה לדף הבא
-                }, 2000);
+                    // === שינוי כאן לקישור של GitHub Pages ===
+                    window.location.href = 'https://vikonder.github.io/MathGame/index2.html'; 
+                }, 2000); // 2000 מילישניות = 2 שניות
 
             } else {
-                feedbackElement.textContent = 'לא נכון. בדוק את החישובים (sin(60°) = ?) ונסה שוב.'; // רמז נוסף
+                feedbackElement.textContent = 'לא נכון. בדוק את החישובים (sin(60°) = ?) ונסה שוב.';
                 feedbackElement.className = 'incorrect';
             }
         }
